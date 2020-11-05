@@ -10,7 +10,10 @@ import junit.framework.Assert;
 
 import static org.junit.Assert.*;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -64,5 +67,23 @@ public class AddressBookTest {
     	addBookService.addContactToBook("Anirban", "Mukherjee", "Dhakuria", "Kolkata", "West Bengal", "700055", "9191919191", "anirban@gmail.com");
     	ContactDetails contact = addBookService.checkAddressBookDataInSyncWithDB("Anirban");
     	Assert.assertEquals("anirban@gmail.com", contact.email);
+    }
+	
+	@Test 
+    public void given3Contacts_WhenAdded_ShouldMatchContactsCount() {
+    	ContactDetails[] addBookData = {
+    			new ContactDetails("Aritra", "Pal", "Howrah","Kolkata", "West Bengal", "700066", "9123912391", "aritra@gmail.com"),
+    			new ContactDetails("Sneha", "Biswas", "Airport","Kolkata", "West Bengal", "700023", "9156912391", "sneha@gmail.com"),
+    			new ContactDetails("Anirban", "Mukherjee", "Dhakuria","Kolkata", "West Bengal", "700044", "9128712391", "anirban@gmail.com"),
+    	};
+    	AddressBookService addBookService = new AddressBookService();
+    	addBookService.readAddresBookData(IOService.DB_IO);
+    	Instant threadStart = Instant.now();
+    	addBookService.addContactsWithThreads(Arrays.asList(addBookData));
+    	Instant threadEnd = Instant.now();
+    	System.out.println("Duration with thread : " + Duration.between(threadStart, threadEnd));
+    	List<ContactDetails> addressBookData = addBookService.readAddresBookData(IOService.DB_IO);
+    	System.out.println(addressBookData.size());
+    	Assert.assertEquals(4, addressBookData.size());
     }
 }
