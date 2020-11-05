@@ -56,4 +56,12 @@ private List<ContactDetails> addBook = new ArrayList<>();
 	public List<ContactDetails> searchContactByState(String state) {
 		return addBook.stream().filter(n -> n.state.equals(state)).collect(Collectors.toList());
 	}
+	
+	public long countOfContactByCity(String city) {
+		return addBook.stream().filter(n -> n.city.equals(city)).count();
+	}
+	
+	public long countOfContactByState(String state) {
+		return addBook.stream().filter(n -> n.state.equals(state)).count();
+	}
 }
