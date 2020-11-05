@@ -22,26 +22,25 @@ public class AddressBookService {
 		this.addBookList = addBookList;
 	}
 	
-	public List<ContactDetails> readAddresBookData(AddressBookWorkshop.AddressBookExecutor.IOService ioService) {
+	public List<ContactDetails> readAddressBookData(AddressBookWorkshop.AddressBookExecutor.IOService ioService) {
 		if(ioService.equals(IOService.DB_IO)) {
 			this.addBookList = addBookDB.readData();
 		}
 		return this.addBookList;
 	}
 	
-	public void updateContactsCity(String firstName, String city) {
-		int result = addBookDB.updateData(firstName, city);
-		if(result == 0)	return;
-		ContactDetails addBookData = this.checkAddressBookDataInSyncWithDB(firstName);
+	public void updateContactsCity1(String firstName, String city, AddressBookWorkshop.AddressBookExecutor.IOService ioService) {
+		if(ioService.equals(IOService.DB_IO)) {
+			int result = addBookDB.updateData(firstName, city);
+			if(result == 0)	return;
+		}
+		ContactDetails addBookData = this.getContactsData(firstName);
 		if(addBookData != null)	addBookData.city = city;
 	}
 
-	public ContactDetails checkAddressBookDataInSyncWithDB(String firstName) {
+	public boolean checkAddressBookDataInSyncWithDB(String firstName) {
 		List<ContactDetails> addBookDataList = addBookDB.getAddressBookData(firstName);
-		return addBookDataList.stream()
-				  .filter(con -> con.firstName.equals(firstName))
-				  .findFirst()
-				  .orElse(null);
+		return addBookDataList.get(0).equals(getContactsData(firstName));
 	}
 	
 	public List<ContactDetails> readAddressBookForDateRange(AddressBookWorkshop.AddressBookExecutor.IOService ioService, LocalDate startDate, LocalDate endDate) {
@@ -50,7 +49,7 @@ public class AddressBookService {
 		}
 		return null;
 	}
-	
+
 	public Map<String, Integer> readCountContactsByCity(AddressBookWorkshop.AddressBookExecutor.IOService ioService) {
 		if(ioService.equals(IOService.DB_IO)) {
 			return addBookDB.getCountByCity();
@@ -58,17 +57,17 @@ public class AddressBookService {
 		return null;
 	}
 
-	public Map<String, Integer> readCountContactsByState(AddressBookWorkshop.AddressBookExecutor.IOService ioService) {
-		if(ioService.equals(IOService.DB_IO)) {
+	public Map<String, Integer> readCountContactsByState(AddressBookWorkshop.AddressBookExecutor.IOService dbIo) {
+		if(dbIo.equals(IOService.DB_IO)) {
 			return addBookDB.getCountByState();
 		}
 		return null;
 	}
-	
+
 	public void addContactToBook(String firstName, String lastName, String  address, String city, String state, String zipcode, String phone, String email) {
 		addBookList.add(addBookDB.addContactToBook(firstName, lastName, address, city, state, zipcode, phone, email));
 	}
-	
+
 	public void addContactsWithThreads(List<ContactDetails> addBookList) {
 		Map<Integer, Boolean> contactAdditionStatus = new HashMap<Integer, Boolean>();
 		addBookList.forEach(addBookData -> {
@@ -88,5 +87,34 @@ public class AddressBookService {
 			}
 			catch(InterruptedException e) {}
 		}
+	}
+	
+	public ContactDetails getContactsData(String name) {
+		ContactDetails addBookData;
+		addBookData = this.addBookList.stream()
+													  .filter(con -> con.firstName.equals(name))
+													  .findFirst()
+													  .orElse(null);
+		return addBookData;
+	}
+
+	public long countEntries(IOService ioService) {
+		return addBookList.size();
+	}
+
+	public void deleteEmployeeFromPayroll(String name, IOService ioService) {
+		if(ioService.equals(IOService.REST_IO)) {
+			ContactDetails addBookData = this.getContactsData(name);
+			addBookList.remove(addBookData);
+		}
+	}
+
+	public void updateContactsCity(String firstName, String city, IOService ioService) {
+		if(ioService.equals(IOService.REST_IO)) {
+			int result = addBookDB.updateData(firstName, city);
+			if(result == 0)	return;
+		}
+		ContactDetails addBookData = this.getContactsData(firstName);
+		if(addBookData != null)	addBookData.city = city;
 	}
 }
