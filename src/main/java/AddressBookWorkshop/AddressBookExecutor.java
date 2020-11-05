@@ -6,6 +6,10 @@ package AddressBookWorkshop;
 import java.util.*;
 
 public class AddressBookExecutor {
+	public enum IOService {
+		CONSOLE_IO, FILE_IO, DB_IO, REST_IO
+	}
+	
 	Scanner sc = new Scanner(System.in);
 	static String firstName, lastName, address, city, state, zipcode, phone, email;
 	static String firstName1, lastName1, address1, city1, state1, zipcode1, phone1, email1;
@@ -58,17 +62,17 @@ public class AddressBookExecutor {
 		System.out.println("Welome to Address Book!!!");
 		
 		do {
-			System.out.println("Press 6 to search for Contacts by City");
-			System.out.println("Press 7 to search for Contacts by State");
-			System.out.println("Press 8 to add Address Book");
-			System.out.println("Press 9 to exit");
+			System.out.println("Press 8 to search for Contacts by City");
+			System.out.println("Press 9 to search for Contacts by State");
+			System.out.println("Press 10 to add Address Book");
+			System.out.println("Press 11 to exit");
 			check = in.nextInt();
 			
-			if(check == 8) {
+			if(check == 10) {
 				book.add(addBook);
 				do {
 					
-					System.out.println("Menu \nPress 1 to Add a contact \nPress 2 to Edit a Contact \nPress 3 to Remove a contact \nPress 4 to View all contact \nPress 5 to Exit");
+					System.out.println("Menu \nPress 1 to Add a contact \nPress 2 to Edit a Contact \nPress 3 to Remove a contact \nPress 4 to View all contact \nPress 5 to Read from File \nPress 6 to Write to File \nPress 7 to exit");
 					a=in.nextInt();
 					switch(a) {
 					case 1:
@@ -133,28 +137,44 @@ public class AddressBookExecutor {
 						}
 						
 						break;
-				
-					case 5: break;
+						
+					case 5: 
+						IOService ioService = null;
+						if(ioService.equals(IOService.FILE_IO)) {
+							new AddressBookFileIOService().readData();
+						}
+						
+					case 6:
+						IOService ioService1 = null;
+						if(ioService1.equals(IOService.FILE_IO)) {
+							new AddressBookFileIOService().writeData((List<ContactDetails>) addBook);
+						}
+						
+					case 7: break;
 					
 					}
 			
-				}while(a!=5);
+				}while(a!=7);
+				
+				
 			}
 			
-			else if(check == 6) {
+			else if(check == 8) {
 				System.out.println("Enter the city : ");
 				String city2 = in.nextLine();
 				System.out.println(addBook.searchContactByCity(city2));
 				System.out.println("Count of contacts based on city is : " + addBook.countOfContactByCity(city2));
 			}
 			
-			else if(check == 7) {
+			else if(check == 9) {
 				System.out.println("Enter the state : ");
 				String state2 = in.nextLine();
 				System.out.println(addBook.searchContactByState(state2));
 				System.out.println("Count of contacts based on state is : " + addBook.countOfContactByState(state2));
 			}
 			
-		}while(check!=9);
+		}while(check!=11);
+		
+		
 	}
 }
