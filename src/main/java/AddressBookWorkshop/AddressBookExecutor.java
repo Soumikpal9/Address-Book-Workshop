@@ -46,40 +46,63 @@ public class AddressBookExecutor {
 		email1 = sc.nextLine();
 	}
 	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
 		AddressBook addBook = new AddressBook();
+		AddressBookExecutor entDet = new AddressBookExecutor();
+		int a = 5;
 		
 		System.out.println("Welome to Address Book!!!");
-		AddressBookExecutor entDet = new AddressBookExecutor();
-		entDet.addDetails();
 		
-		ContactDetailsRegex validateDetails = new ContactDetailsRegex();
-		if(validateDetails.FirstNameValidation(firstName) && validateDetails.LastNameValidation(lastName) && validateDetails.AddressValidation(address) && validateDetails.CityValidation(city) && validateDetails.StateValidation(state) && validateDetails.ZipcodeValidation(zipcode) && validateDetails.PhoneValidation(phone) && validateDetails.EmailValidation(email)) {
-			ContactDetails contact = new ContactDetails(firstName, lastName, address, city, state, zipcode, phone, email);
-			addBook.addContact(contact);
-			List<ContactDetails> contDet = new ArrayList<>();
-			contDet = addBook.showContact();
-			for(ContactDetails i : contDet) {
+		do {
+			
+			System.out.println("Menu \nPress 1 to Add a contact \nPress 2 to Edit a Contact \nPress 3 to Remove a contact \nPress 4 to View all contact \nPress 5 to Exit");
+			a=in.nextInt();
+			switch(a) {
+			case 1:
+				entDet.addDetails();
+				ContactDetailsRegex validateDetails = new ContactDetailsRegex();
+				if(validateDetails.FirstNameValidation(firstName) && validateDetails.LastNameValidation(lastName) && validateDetails.AddressValidation(address) && validateDetails.CityValidation(city) && validateDetails.StateValidation(state) && validateDetails.ZipcodeValidation(zipcode) && validateDetails.PhoneValidation(phone) && validateDetails.EmailValidation(email)) {
+					ContactDetails contact = new ContactDetails(firstName, lastName, address, city, state, zipcode, phone, email);
+					addBook.addContact(contact);
+				}
+				else{
+					System.out.println("Enetered inputs are not validated. Please enter valid inputs.");
+				}
+				break;
+			
+			case 2:
+				entDet.editDetails();
+				ContactDetailsRegex validateDetails1 = new ContactDetailsRegex();
+				if(validateDetails1.FirstNameValidation(firstName1) && validateDetails1.LastNameValidation(lastName1) && validateDetails1.AddressValidation(address1) && validateDetails1.CityValidation(city1) && validateDetails1.StateValidation(state1) && validateDetails1.ZipcodeValidation(zipcode1) && validateDetails1.PhoneValidation(phone1) && validateDetails1.EmailValidation(email1)) {
+					ContactDetails contact = new ContactDetails(firstName1, lastName1, address1, city1, state1, zipcode1, phone1, email1);
+					addBook.updateContact(contact);
+				}
+				else{
+					System.out.println("Enetered inputs are not validated. Please enter valid inputs.");
+				}
+				break;
+			case 3:
+				System.out.println("Enter first name of contact to remove: ");
+				String fname= in.nextLine();
+				boolean b = addBook.removeContact(fname);
+				if(b)
+					System.out.println("Contact removed");
+				else
+					System.out.println("Contact not found");
+				break;
+			
+			case 4:
+				List<ContactDetails> contact1 = new ArrayList<ContactDetails>();
+				contact1=addBook.showContact();
+				for(ContactDetails i : contact1) {
 				System.out.println(i);
-			}
-		}
-		else{
-			System.out.println("Entered inputs are not validated. Please enter valid inputs.");
-		}
+				}
+				break;
 		
-		System.out.println("Update contact: Enter name and all the details to update");
-		entDet.editDetails();
-		
-		if(validateDetails.FirstNameValidation(firstName1) && validateDetails.LastNameValidation(lastName1) && validateDetails.AddressValidation(address1) && validateDetails.CityValidation(city1) && validateDetails.StateValidation(state1) && validateDetails.ZipcodeValidation(zipcode1) && validateDetails.PhoneValidation(phone1) && validateDetails.EmailValidation(email1)) {
-			ContactDetails contact = new ContactDetails(firstName1, lastName1, address1, city1, state1, zipcode1, phone1, email1);
-			addBook.updateContact(contact);
-			List<ContactDetails> contDet = new ArrayList<>();
-			contDet = addBook.showContact();
-			for(ContactDetails i : contDet) {
-				System.out.println(i);
+			case 5: break;
+			
 			}
-		}
-		else{
-			System.out.println("Enetered inputs are not validated. Please enter valid inputs.");
-		}
+	
+		}while(a!=5);
 	}
 }
