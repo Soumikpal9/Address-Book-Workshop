@@ -130,12 +130,14 @@ public class AddressBookExecutor {
 				System.out.println("Enter the city : ");
 				String city2 = in.nextLine();
 				System.out.println(addBook.searchContactByCity(city2));
+				System.out.println("Count of contacts based on city is : " + addBook.countOfContactByCity(city2));
 			}
 			
 			else if(check == 7) {
 				System.out.println("Enter the state : ");
 				String state2 = in.nextLine();
 				System.out.println(addBook.searchContactByState(state2));
+				System.out.println("Count of contacts based on state is : " + addBook.countOfContactByState(state2));
 			}
 			
 		}while(check!=9);
