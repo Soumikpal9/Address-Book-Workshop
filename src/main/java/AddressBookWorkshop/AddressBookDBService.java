@@ -166,4 +166,22 @@ public class AddressBookDBService {
 		}
 		return stateToContactsMap;
 	}
+	
+	public ContactDetails addContactToBook(String firstName, String lastName, String address, String city, String state, String zipcode, String phone, String email) {
+		ContactDetails addBookData = null;
+		String sql = String.format("INSERT INTO addressbook (first_name, last_name, address, city, state, zipcode, phone, email) VALUES ('%s', %s, '%s', '%s', '%s', %s, '%s', '%s')", firstName, lastName, address, city, state, zipcode, phone, email);
+		try(Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
+			if(rowAffected == 1) {
+				ResultSet result = statement.getGeneratedKeys();
+				if(result.next())	firstName = result.getString("first_name");
+			}
+			addBookData = new ContactDetails(firstName, lastName, address, city, state, zipcode, phone, email);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return addBookData;
+	}
 }
