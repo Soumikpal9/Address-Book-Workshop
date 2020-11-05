@@ -2,7 +2,7 @@ package AddressBookWorkshop;
 import java.util.*;
 
 public class AddressBook {
-private List<ContactDetails> addBook = new ArrayList<>();
+	private List<ContactDetails> addBook = new ArrayList<>();
 	
 	public void setAddressBook(List<ContactDetails> addBook) {
 		this.addBook = addBook;
