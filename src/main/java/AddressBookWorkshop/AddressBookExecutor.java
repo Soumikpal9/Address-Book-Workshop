@@ -72,7 +72,7 @@ public class AddressBookExecutor {
 				book.add(addBook);
 				do {
 					
-					System.out.println("Menu \nPress 1 to Add a contact \nPress 2 to Edit a Contact \nPress 3 to Remove a contact \nPress 4 to View all contact \nPress 5 to Read from File \nPress 6 to Write to File \nPress 7 to exit");
+					System.out.println("Menu \nPress 1 to Add a contact from console \nPress 2 to Edit a Contact \nPress 3 to Remove a contact \nPress 4 to View all contact \nPress 5 to Read from File \nPress 6 to Write to File \nPress 7 to Read from CSV \nPress 8 to Write to CSV  \nPress 99 to exit");
 					a=in.nextInt();
 					switch(a) {
 					case 1:
@@ -139,22 +139,64 @@ public class AddressBookExecutor {
 						break;
 						
 					case 5: 
-						IOService ioService = null;
-						if(ioService.equals(IOService.FILE_IO)) {
-							new AddressBookFileIOService().readData();
+						AddressBookFileIOService addressBookFileIO = new AddressBookFileIOService();
+						List<ContactDetails> contactList = new ArrayList<>();
+						contactList = addressBookFileIO.readData();
+						System.out.println(contactList);
+						if(contactList.size() == 3) {
+							System.out.println("Test Case Passed");
+						}
+						else {
+							System.out.println("Test Case Failed");
 						}
 						
 					case 6:
-						IOService ioService1 = null;
-						if(ioService1.equals(IOService.FILE_IO)) {
-							new AddressBookFileIOService().writeData((List<ContactDetails>) addBook);
+						AddressBookFileIOService addressBookFIleIO2 = new AddressBookFileIOService();
+						List<ContactDetails> contactList2 = new ArrayList<>();
+	
+						ContactDetails contact11 = new ContactDetails("Soumik", "Pal", "Jadavpur", "Kolkata", "WestBengal", "700075", "9477328244", "soumik.pal@capgemini.com");
+						ContactDetails contact12 = new ContactDetails("Aritra", "Sinha", "Garia", "Kolkata", "WestBengal", "700067", "9876785298", "aritra.sinha@capgemini.com");
+						ContactDetails conatct13 = new ContactDetails("Kishan", "Suresh", "Whitefield", "Bangalore", "Karnataka", "556798", "9987123423", "kishan@gmail.com");
+						contactList2.add(contact11);
+						contactList2.add(contact12);
+						contactList2.add(conatct13);
+						addressBookFIleIO2.writeData(contactList2);
+						
+					case 7:
+						AddressBookFileIOService addressBookFileIO3 = new AddressBookFileIOService();
+						List<ContactDetails> contactList3 = new ArrayList<>();
+						contactList = addressBookFileIO3.readCsv();
+						System.out.println(contactList);
+						if(contactList.size() == 3) {
+							System.out.println("Test Case Passed");
+						}
+						else {
+							System.out.println("Test Case Failed");
 						}
 						
-					case 7: break;
+					case 8:
+						AddressBookFileIOService addressBookFIleIO4 = new AddressBookFileIOService();
+						List<ContactDetails> contactList4 = new ArrayList<>();
+	
+						ContactDetails contact21 = new ContactDetails("Soumik", "Pal", "Jadavpur", "Kolkata", "WestBengal", "700075", "9477328244", "soumik.pal@capgemini.com");
+						ContactDetails contact22 = new ContactDetails("Aritra", "Sinha", "Garia", "Kolkata", "WestBengal", "700067", "9876785298", "aritra.sinha@capgemini.com");
+						ContactDetails conatct23 = new ContactDetails("Kishan", "Suresh", "Whitefield", "Bangalore", "Karnataka", "556798", "9987123423", "kishan@gmail.com");
+						contactList4.add(contact21);
+						contactList4.add(contact22);
+						contactList4.add(conatct23);
+						boolean bb =  addressBookFIleIO4.writeCsv(contactList4);
+						if(bb) {
+							System.out.println("Test Case Passed");
+						}
+						else {
+							System.out.println("Test Case Failed");
+						}
+						
+					case 99: break;
 					
 					}
 			
-				}while(a!=7);
+				}while(a!=99);
 				
 				
 			}
