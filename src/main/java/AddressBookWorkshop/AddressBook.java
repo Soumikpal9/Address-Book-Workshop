@@ -1,5 +1,6 @@
 package AddressBookWorkshop;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBook {
 private List<ContactDetails> addBook = new ArrayList<>();
@@ -33,7 +34,7 @@ private List<ContactDetails> addBook = new ArrayList<>();
 			return "No such contact present in the Address Book";
 		}
 		else {
-			return "Contact udated successfully";
+			return "Contact updated successfully";
 		}
 	}
 	
@@ -46,5 +47,13 @@ private List<ContactDetails> addBook = new ArrayList<>();
 			}
 		}
 		return addBook.remove(contact);
+	}
+	
+	public List<ContactDetails> searchContactByCity(String city) {
+		return addBook.stream().filter(n -> n.city.equals(city)).collect(Collectors.toList());
+	}
+	
+	public List<ContactDetails> searchContactByState(String state) {
+		return addBook.stream().filter(n -> n.state.equals(state)).collect(Collectors.toList());
 	}
 }
