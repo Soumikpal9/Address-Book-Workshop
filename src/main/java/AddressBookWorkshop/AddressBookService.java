@@ -2,6 +2,7 @@ package AddressBookWorkshop;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class AddressBookService {
 	public enum IOService {
@@ -45,6 +46,20 @@ public class AddressBookService {
 	public List<ContactDetails> readAddressBookForDateRange(AddressBookWorkshop.AddressBookExecutor.IOService ioService, LocalDate startDate, LocalDate endDate) {
 		if(ioService.equals(IOService.DB_IO)) {
 			return addBookDB.getAddressBookForDateRange(startDate, endDate);
+		}
+		return null;
+	}
+	
+	public Map<String, Integer> readCountContactsByCity(AddressBookWorkshop.AddressBookExecutor.IOService ioService) {
+		if(ioService.equals(IOService.DB_IO)) {
+			return addBookDB.getCountByCity();
+		}
+		return null;
+	}
+
+	public Map<String, Integer> readCountContactsByState(AddressBookWorkshop.AddressBookExecutor.IOService ioService) {
+		if(ioService.equals(IOService.DB_IO)) {
+			return addBookDB.getCountByState();
 		}
 		return null;
 	}
