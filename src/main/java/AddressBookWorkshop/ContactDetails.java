@@ -1,5 +1,7 @@
 package AddressBookWorkshop;
 
+import java.time.LocalDate;
+
 public class ContactDetails {
 	public String firstName;
 	public String lastName;
@@ -9,6 +11,7 @@ public class ContactDetails {
 	public String zipcode;
 	public String phone;
 	public String email;
+	public LocalDate start;
 	
 	public ContactDetails() {
 		
@@ -23,6 +26,11 @@ public class ContactDetails {
 		this.zipcode = zipcode;
 		this.phone = phone;
 		this.email = email;
+	}
+	
+	public ContactDetails(String firstName, String lastName, String address, String city, String state, String zipcode, String phone, String email, LocalDate start) {
+		this(firstName, lastName, address, city, state, zipcode, phone, email);
+		this.start = start;
 	}
 	
 	@Override

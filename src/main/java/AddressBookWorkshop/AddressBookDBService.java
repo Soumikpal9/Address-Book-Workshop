@@ -1,11 +1,13 @@
 package AddressBookWorkshop;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,5 +109,23 @@ public class AddressBookDBService {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public List<ContactDetails> getAddressBookForDateRange(LocalDate startDate, LocalDate endDate) {
+		String sql = String.format("SELECT * FROM addressbook WHERE start BETWEEN '%s' AND '%s'", Date.valueOf(startDate), Date.valueOf(endDate));
+		return this.getAddressBookDataUSingDB(sql);
+	}
+
+	private List<ContactDetails> getAddressBookDataUSingDB(String sql) {
+		List<ContactDetails> addBookList = new ArrayList<>();
+		try(Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+			addBookList = this.getAddressBookData(result);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return addBookList;
 	}
 }

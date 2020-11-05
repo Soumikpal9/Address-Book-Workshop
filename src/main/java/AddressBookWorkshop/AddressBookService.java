@@ -1,5 +1,6 @@
 package AddressBookWorkshop;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddressBookService {
@@ -39,5 +40,12 @@ public class AddressBookService {
 				  .filter(con -> con.firstName.equals(firstName))
 				  .findFirst()
 				  .orElse(null);
+	}
+	
+	public List<ContactDetails> readAddressBookForDateRange(AddressBookWorkshop.AddressBookExecutor.IOService ioService, LocalDate startDate, LocalDate endDate) {
+		if(ioService.equals(IOService.DB_IO)) {
+			return addBookDB.getAddressBookForDateRange(startDate, endDate);
+		}
+		return null;
 	}
 }

@@ -10,6 +10,7 @@ import junit.framework.Assert;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddressBookTest {
@@ -27,5 +28,15 @@ public class AddressBookTest {
     	addBookService.updateContactsCity("Soumik", "Noida");
     	ContactDetails contact = addBookService.checkAddressBookDataInSyncWithDB("Soumik");
     	Assert.assertEquals("Noida", contact.city);
+    }
+	
+	@Test 
+    public void givenDateRange_WhenRetrieved_ShouldMatchContactsCount() {
+    	AddressBookService addBookService = new AddressBookService();
+    	addBookService.readAddresBookData(IOService.DB_IO);
+    	LocalDate startDate = LocalDate.of(2017, 01, 01);
+    	LocalDate endDate = LocalDate.now();
+    	List<ContactDetails> addBookData = addBookService.readAddressBookForDateRange(IOService.DB_IO, startDate, endDate);
+    	Assert.assertEquals(6, addBookData.size());
     }
 }
