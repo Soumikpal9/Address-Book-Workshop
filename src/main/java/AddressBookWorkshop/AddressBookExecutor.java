@@ -192,6 +192,34 @@ public class AddressBookExecutor {
 							System.out.println("Test Case Failed");
 						}
 						
+					case 9:
+						AddressBookFileIOService addressBookFileIO5 = new AddressBookFileIOService();
+						boolean bc = addressBookFileIO5.readJson();
+						if(bc) {
+							System.out.println("Test Case Passed");
+						}
+						else {
+							System.out.println("Test Case Failed");
+						}
+						
+					case 10:
+						AddressBookFileIOService addressBookFIleIO6 = new AddressBookFileIOService();
+						List<ContactDetails> contactList6 = new ArrayList<>();
+						
+						ContactDetails contact31 = new ContactDetails("Soumik", "Pal", "Jadavpur", "Kolkata", "WestBengal", "700075", "9477328244", "soumik.pal@capgemini.com");
+						ContactDetails contact32 = new ContactDetails("Aritra", "Sinha", "Garia", "Kolkata", "WestBengal", "700067", "9876785298", "aritra.sinha@capgemini.com");
+						ContactDetails conatct33 = new ContactDetails("Kishan", "Suresh", "Whitefield", "Bangalore", "Karnataka", "556798", "9987123423", "kishan@gmail.com");
+						contactList6.add(contact31);
+						contactList6.add(contact32);
+						contactList6.add(conatct33);
+						boolean bd = addressBookFIleIO6.writeJson(contactList6);
+						if(bd) {
+							System.out.println("Test Case Passed");
+						}
+						else {
+							System.out.println("Test Case Failed");
+						}
+						
 					case 99: break;
 					
 					}
