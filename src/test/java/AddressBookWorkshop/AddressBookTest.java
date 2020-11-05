@@ -19,4 +19,13 @@ public class AddressBookTest {
     	List<ContactDetails> addBookData = addBookService.readAddresBookData(IOService.DB_IO);
     	Assert.assertEquals(6, addBookData.size());
     }
+	
+	@Test 
+    public void givenNewCity_WhenUpdated_shouldMatchWithDB() {
+    	AddressBookService addBookService = new AddressBookService();
+    	addBookService.readAddresBookData(IOService.DB_IO);
+    	addBookService.updateContactsCity("Soumik", "Noida");
+    	ContactDetails contact = addBookService.checkAddressBookDataInSyncWithDB("Soumik");
+    	Assert.assertEquals("Noida", contact.city);
+    }
 }

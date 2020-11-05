@@ -25,4 +25,19 @@ public class AddressBookService {
 		}
 		return this.addBookList;
 	}
+	
+	public void updateContactsCity(String firstName, String city) {
+		int result = addBookDB.updateData(firstName, city);
+		if(result == 0)	return;
+		ContactDetails addBookData = this.checkAddressBookDataInSyncWithDB(firstName);
+		if(addBookData != null)	addBookData.city = city;
+	}
+
+	public ContactDetails checkAddressBookDataInSyncWithDB(String firstName) {
+		List<ContactDetails> addBookDataList = addBookDB.getAddressBookData(firstName);
+		return addBookDataList.stream()
+				  .filter(con -> con.firstName.equals(firstName))
+				  .findFirst()
+				  .orElse(null);
+	}
 }
