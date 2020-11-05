@@ -1,7 +1,12 @@
 package AddressBookWorkshop;
 
 import java.io.File;
+import java.io.FileWriter;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -24,6 +29,9 @@ public class AddressBookFileIOService {
 	
 	public static String CONTACT_READ_CSV = "./demo1.csv";
 	public static String CONTACT_WRITE_CSV = "./demo2.csv";
+	
+	public static String CONTACT_READ_JSON = "./ContactRead.json";
+	public static String CONTACT_WRITE_JSON = "./ContactWrite.json";
 	
 	public List<ContactDetails> readData(){
 		List<ContactDetails> addBook = new ArrayList<>();
@@ -90,4 +98,32 @@ public class AddressBookFileIOService {
 		}
 		return true;
 	}
-}
+	
+	public boolean readJson() {
+		try {
+			Reader reader = Files.newBufferedReader(Paths.get(CONTACT_READ_JSON));
+			JsonParser jsonParser = new JsonParser();
+			JsonElement object = jsonParser.parse(reader);
+			JsonArray contactList = (JsonArray) object;
+			return true;
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean writeJson(List<ContactDetails> addBook) {
+		Gson gson = new Gson();
+		String json = gson.toJson(addBook);
+		try {
+			FileWriter fileWriter = new FileWriter(CONTACT_READ_JSON);
+			fileWriter.write(json);
+			fileWriter.close();
+			return true;
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
