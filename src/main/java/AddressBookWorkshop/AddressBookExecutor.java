@@ -114,9 +114,24 @@ public class AddressBookExecutor {
 					case 4:
 						List<ContactDetails> contact1 = new ArrayList<ContactDetails>();
 						contact1=addBook.showContact();
-						for(ContactDetails i : contact1) {
-						System.out.println(i);
+						System.out.println("Press 10 to view contacts sorted by First Name");
+						System.out.println("Press 11 to view contacts sorted by City");
+						System.out.println("Press 12 to view contacts sorted by State");
+						System.out.println("Press 13 to view contacts sorted by Zipcode");
+						int s = in.nextInt();
+						if(s == 10) {
+							System.out.println(addBook.showContact());
 						}
+						else if(s == 11) {
+							System.out.println(addBook.showSortedContactsBasedOnCity());
+						}
+						else if(s ==12) {
+							System.out.println(addBook.showSortedContactsBasedOnState());
+						}
+						else if(s == 13) {
+							System.out.println(addBook.showSortedContactsBasedOnZipcode());
+						}
+						
 						break;
 				
 					case 5: break;
