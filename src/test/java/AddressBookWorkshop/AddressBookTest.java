@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class AddressBookTest {
 	@Test
@@ -38,5 +39,21 @@ public class AddressBookTest {
     	LocalDate endDate = LocalDate.now();
     	List<ContactDetails> addBookData = addBookService.readAddressBookForDateRange(IOService.DB_IO, startDate, endDate);
     	Assert.assertEquals(6, addBookData.size());
+    }
+	
+	@Test
+    public void givenContactsData_WhenCountByCity_ShouldReturnProperValue() {
+    	AddressBookService addBookService = new AddressBookService();
+    	addBookService.readAddresBookData(IOService.DB_IO);
+    	Map<String, Integer> countContactsByCity = addBookService.readCountContactsByCity(IOService.DB_IO);
+    	Assert.assertTrue(countContactsByCity.get("Bangalore").equals(1) && countContactsByCity.get("Kolkata").equals(3) && countContactsByCity.get("Chennai").equals(1) && countContactsByCity.get("Siliguri").equals(1));
+    }
+	
+	@Test
+    public void givenContactsData_WhenCountByState_ShouldReturnProperValue() {
+    	AddressBookService addBookService = new AddressBookService();
+    	addBookService.readAddresBookData(IOService.DB_IO);
+    	Map<String, Integer> countContactsByState = addBookService.readCountContactsByState(IOService.DB_IO);
+    	Assert.assertTrue(countContactsByState.get("Karnataka").equals(1) && countContactsByState.get("West Bengal").equals(4) && countContactsByState.get("Tamilnadu").equals(1));
     }
 }
