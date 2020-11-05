@@ -4,8 +4,19 @@
 package AddressBookWorkshop;
 
 import org.junit.Test;
+
+import AddressBookWorkshop.AddressBookExecutor.IOService;
+import junit.framework.Assert;
+
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 public class AddressBookTest {
-    
+	@Test
+    public void givenEmpPayrollDataInDB_ShouldMatchEmpCount() {
+    	AddressBookService addBookService = new AddressBookService();
+    	List<ContactDetails> addBookData = addBookService.readAddresBookData(IOService.DB_IO);
+    	Assert.assertEquals(6, addBookData.size());
+    }
 }
