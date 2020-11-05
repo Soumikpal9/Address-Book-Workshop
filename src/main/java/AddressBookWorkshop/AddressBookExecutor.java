@@ -50,6 +50,7 @@ public class AddressBookExecutor {
 		AddressBook addBook = new AddressBook();
 		AddressBookExecutor entDet = new AddressBookExecutor();
 		int a = 5;
+		int count = 0;
 		
 		System.out.println("Welome to Address Book!!!");
 		
@@ -60,6 +61,7 @@ public class AddressBookExecutor {
 			switch(a) {
 			case 1:
 				entDet.addDetails();
+				count++;
 				ContactDetailsRegex validateDetails = new ContactDetailsRegex();
 				if(validateDetails.FirstNameValidation(firstName) && validateDetails.LastNameValidation(lastName) && validateDetails.AddressValidation(address) && validateDetails.CityValidation(city) && validateDetails.StateValidation(state) && validateDetails.ZipcodeValidation(zipcode) && validateDetails.PhoneValidation(phone) && validateDetails.EmailValidation(email)) {
 					ContactDetails contact = new ContactDetails(firstName, lastName, address, city, state, zipcode, phone, email);
