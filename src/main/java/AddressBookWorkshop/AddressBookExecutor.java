@@ -52,6 +52,7 @@ public class AddressBookExecutor {
 		int a = 5;
 		int count = 0;
 		int check = 9;
+		int f = 0;
 		
 		System.out.println("Welome to Address Book!!!");
 		
@@ -72,9 +73,15 @@ public class AddressBookExecutor {
 						entDet.addDetails();
 						count++;
 						ContactDetailsRegex validateDetails = new ContactDetailsRegex();
-						if(validateDetails.FirstNameValidation(firstName) && validateDetails.LastNameValidation(lastName) && validateDetails.AddressValidation(address) && validateDetails.CityValidation(city) && validateDetails.StateValidation(state) && validateDetails.ZipcodeValidation(zipcode) && validateDetails.PhoneValidation(phone) && validateDetails.EmailValidation(email)) {
+						if(validateDetails.firstNameValidation.validate(firstName) && validateDetails.lastNameValidation.validate(lastName) && validateDetails.addressValidation.validate(address) && validateDetails.cityValidation.validate(city) && validateDetails.stateValidation.validate(state) && validateDetails.zipcodeValidation.validate(zipcode) && validateDetails.phoneValidation.validate(phone) && validateDetails.emailValidation.validate(email)) {
 							ContactDetails contact = new ContactDetails(firstName, lastName, address, city, state, zipcode, phone, email);
-							addBook.addContact(contact);
+							if(book.stream().anyMatch(n -> n.getAddressBook().contains(firstName))) {
+								System.out.println("Duplicate entries found. Duplicate entries not allowed.");
+								f = 1;
+							}
+							if(f == 0) {
+								addBook.addContact(contact);
+							}
 						}
 						else{
 							System.out.println("Enetered inputs are not validated. Please enter valid inputs.");
@@ -84,7 +91,7 @@ public class AddressBookExecutor {
 					case 2:
 						entDet.editDetails();
 						ContactDetailsRegex validateDetails1 = new ContactDetailsRegex();
-						if(validateDetails1.FirstNameValidation(firstName1) && validateDetails1.LastNameValidation(lastName1) && validateDetails1.AddressValidation(address1) && validateDetails1.CityValidation(city1) && validateDetails1.StateValidation(state1) && validateDetails1.ZipcodeValidation(zipcode1) && validateDetails1.PhoneValidation(phone1) && validateDetails1.EmailValidation(email1)) {
+						if(validateDetails1.firstNameValidation.validate(firstName1) && validateDetails1.lastNameValidation.validate(lastName1) && validateDetails1.addressValidation.validate(address1) && validateDetails1.cityValidation.validate(city1) && validateDetails1.stateValidation.validate(state1) && validateDetails1.zipcodeValidation.validate(zipcode1) && validateDetails1.phoneValidation.validate(phone1) && validateDetails1.emailValidation.validate(email1)) {
 							ContactDetails contact = new ContactDetails(firstName1, lastName1, address1, city1, state1, zipcode1, phone1, email1);
 							addBook.updateContact(contact);
 						}
