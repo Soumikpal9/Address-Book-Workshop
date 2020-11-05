@@ -21,23 +21,23 @@ public class AddressBookTest {
 	@Test
     public void givenEmpPayrollDataInDB_ShouldMatchEmpCount() {
     	AddressBookService addBookService = new AddressBookService();
-    	List<ContactDetails> addBookData = addBookService.readAddresBookData(IOService.DB_IO);
+    	List<ContactDetails> addBookData = addBookService.readAddressBookData(IOService.DB_IO);
     	Assert.assertEquals(6, addBookData.size());
     }
 	
 	@Test 
     public void givenNewCity_WhenUpdated_shouldMatchWithDB() {
     	AddressBookService addBookService = new AddressBookService();
-    	addBookService.readAddresBookData(IOService.DB_IO);
-    	addBookService.updateContactsCity("Soumik", "Noida");
-    	ContactDetails contact = addBookService.checkAddressBookDataInSyncWithDB("Soumik");
-    	Assert.assertEquals("Noida", contact.city);
+    	addBookService.readAddressBookData(IOService.DB_IO);
+    	addBookService.updateContactsCity1("Soumik", "Noida", IOService.DB_IO);
+    	boolean result = addBookService.checkAddressBookDataInSyncWithDB("Soumik");
+    	Assert.assertTrue(result);
     }
 	
 	@Test 
     public void givenDateRange_WhenRetrieved_ShouldMatchContactsCount() {
     	AddressBookService addBookService = new AddressBookService();
-    	addBookService.readAddresBookData(IOService.DB_IO);
+    	addBookService.readAddressBookData(IOService.DB_IO);
     	LocalDate startDate = LocalDate.of(2017, 01, 01);
     	LocalDate endDate = LocalDate.now();
     	List<ContactDetails> addBookData = addBookService.readAddressBookForDateRange(IOService.DB_IO, startDate, endDate);
@@ -47,7 +47,7 @@ public class AddressBookTest {
 	@Test
     public void givenContactsData_WhenCountByCity_ShouldReturnProperValue() {
     	AddressBookService addBookService = new AddressBookService();
-    	addBookService.readAddresBookData(IOService.DB_IO);
+    	addBookService.readAddressBookData(IOService.DB_IO);
     	Map<String, Integer> countContactsByCity = addBookService.readCountContactsByCity(IOService.DB_IO);
     	Assert.assertTrue(countContactsByCity.get("Bangalore").equals(1) && countContactsByCity.get("Kolkata").equals(3) && countContactsByCity.get("Chennai").equals(1) && countContactsByCity.get("Siliguri").equals(1));
     }
@@ -55,7 +55,7 @@ public class AddressBookTest {
 	@Test
     public void givenContactsData_WhenCountByState_ShouldReturnProperValue() {
     	AddressBookService addBookService = new AddressBookService();
-    	addBookService.readAddresBookData(IOService.DB_IO);
+    	addBookService.readAddressBookData(IOService.DB_IO);
     	Map<String, Integer> countContactsByState = addBookService.readCountContactsByState(IOService.DB_IO);
     	Assert.assertTrue(countContactsByState.get("Karnataka").equals(1) && countContactsByState.get("West Bengal").equals(4) && countContactsByState.get("Tamilnadu").equals(1));
     }
@@ -63,10 +63,10 @@ public class AddressBookTest {
 	@Test
     public void givenNewContact_WhenAdded_ShouldSyncWithDB() {
     	AddressBookService addBookService = new AddressBookService();
-    	addBookService.readAddresBookData(IOService.DB_IO);
+    	addBookService.readAddressBookData(IOService.DB_IO);
     	addBookService.addContactToBook("Anirban", "Mukherjee", "Dhakuria", "Kolkata", "West Bengal", "700055", "9191919191", "anirban@gmail.com");
-    	ContactDetails contact = addBookService.checkAddressBookDataInSyncWithDB("Anirban");
-    	Assert.assertEquals("anirban@gmail.com", contact.email);
+    	boolean result = addBookService.checkAddressBookDataInSyncWithDB("Anirban");
+    	Assert.assertTrue(result);
     }
 	
 	@Test 
@@ -77,12 +77,12 @@ public class AddressBookTest {
     			new ContactDetails("Anirban", "Mukherjee", "Dhakuria","Kolkata", "West Bengal", "700044", "9128712391", "anirban@gmail.com"),
     	};
     	AddressBookService addBookService = new AddressBookService();
-    	addBookService.readAddresBookData(IOService.DB_IO);
+    	addBookService.readAddressBookData(IOService.DB_IO);
     	Instant threadStart = Instant.now();
     	addBookService.addContactsWithThreads(Arrays.asList(addBookData));
     	Instant threadEnd = Instant.now();
     	System.out.println("Duration with thread : " + Duration.between(threadStart, threadEnd));
-    	List<ContactDetails> addressBookData = addBookService.readAddresBookData(IOService.DB_IO);
+    	List<ContactDetails> addressBookData = addBookService.readAddressBookData(IOService.DB_IO);
     	System.out.println(addressBookData.size());
     	Assert.assertEquals(4, addressBookData.size());
     }
