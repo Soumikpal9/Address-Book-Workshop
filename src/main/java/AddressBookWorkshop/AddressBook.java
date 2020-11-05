@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBook {
-private List<ContactDetails> addBook = new ArrayList<>();
+	private List<ContactDetails> addBook = new ArrayList<>();
 	
 	public void setAddressBook(List<ContactDetails> addBook) {
 		this.addBook = addBook;
@@ -18,7 +18,7 @@ private List<ContactDetails> addBook = new ArrayList<>();
 	}
 	
 	public List<ContactDetails> showContact(){
-		return addBook;
+		return addBook.stream().sorted((n1, n2) -> n1.firstName.compareTo(n2.firstName)).collect(Collectors.toList());
 	}
 	
 	public String updateContact(ContactDetails contact) {
@@ -28,13 +28,14 @@ private List<ContactDetails> addBook = new ArrayList<>();
 				addBook.remove(i);
 				addBook.add(contact);
 				count++;
+				break;
 			}
 		}
 		if(count == 0) {
 			return "No such contact present in the Address Book";
 		}
 		else {
-			return "Contact updated successfully";
+			return "Contact udated successfully";
 		}
 	}
 	
