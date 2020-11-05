@@ -36,4 +36,15 @@ private List<ContactDetails> addBook = new ArrayList<>();
 			return "Contact udated successfully";
 		}
 	}
+	
+	public boolean removeContact(String firstName) {
+		ContactDetails contact = new ContactDetails("","","","","","","","");
+		for(ContactDetails i : addBook) {
+			if(i.firstName.equals(firstName)) {
+				contact = i;
+				break;
+			}
+		}
+		return addBook.remove(contact);
+	}
 }
