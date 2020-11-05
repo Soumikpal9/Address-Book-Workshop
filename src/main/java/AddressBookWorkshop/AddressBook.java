@@ -21,6 +21,18 @@ public class AddressBook {
 		return addBook.stream().sorted((n1, n2) -> n1.firstName.compareTo(n2.firstName)).collect(Collectors.toList());
 	}
 	
+	public List<ContactDetails> showSortedContactsBasedOnCity(){
+		return addBook.stream().sorted((n1,n2) -> n1.city.compareTo(n2.city)).collect(Collectors.toList());
+	}
+	
+	public List<ContactDetails> showSortedContactsBasedOnState(){
+		return addBook.stream().sorted((n1,n2) -> n1.state.compareTo(n2.state)).collect(Collectors.toList());
+	}
+	
+	public List<ContactDetails> showSortedContactsBasedOnZipcode(){
+		return addBook.stream().sorted((n1,n2) -> n1.zipcode.compareTo(n2.zipcode)).collect(Collectors.toList());
+	}
+	
 	public String updateContact(ContactDetails contact) {
 		int count = 0;
 		for(ContactDetails i : addBook) {
