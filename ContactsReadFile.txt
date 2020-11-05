@@ -1,0 +1,3 @@
+FirstName : Soumik LastName : Pal Address : Jadavpur City : Kolkata State : WestBengal Zipcode : 700075 PhoneNo : 9477328244 Email : soumik.pal@capgemini.com
+FirstName : Aritra LastName : Sinha Address : Garia City : Kolkata State : WestBengal Zipcode : 700067 PhoneNo : 9876785298 Email : aritra.sinha@capgemini.com
+FirstName : Kishan LastName : Suresh Address : Whitefield City : Bangalore State : Karnataka Zipcode : 556798 PhoneNo : 9987123423 Email : kishan@capgemini.com
